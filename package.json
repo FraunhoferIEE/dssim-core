@@ -1,0 +1,37 @@
+{
+  "name": "dssim-core",
+  "version": "0.1.0",
+  "main": "build/src/index.js",
+  "types": "build/src/index.d.ts",
+  "license": "Apache-2.0",
+  "type": "module",
+  "author": "Michel Otto",
+  "exports": {
+    ".": {
+      "types": [
+        "./build/index.d.ts",
+        "./build/interfaces/models/*.d.ts"
+      ],
+      "import": "./build/index.js"
+    }
+  },
+  "engines": {
+    "node": ">=14.16"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "compile": "tsc",
+    "lint": "gts lint"
+  },
+  "devDependencies": {
+    "gts": "^3.1.0",
+    "typescript": "^4.9.5",
+    "@types/node": "^18.13.0"
+  },
+  "dependencies": {
+    "winston": "^3.8.2",
+    "winston-loki": "^6.0.6"
+  }
+}
