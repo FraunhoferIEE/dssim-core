@@ -31,6 +31,7 @@ export type {Representation} from './interfaces/models/Representation.js';
 export {
   EnvironmentControllerInterface,
   Instance,
+  NetworkProfile,
   BandwidthUnit,
   TimeUnits,
   MemoryUnit,

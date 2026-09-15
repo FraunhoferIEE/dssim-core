@@ -64,28 +64,38 @@ export type CpuUnit = 'cpuunit' | 'milicpu';
 
 export type TimeUnits = 's' | 'ms' | 'us';
 
+/*
+bandwidth: bandwidth or rate limit for the container
+delay: length of time packets will be delayed
+lossRate: percentage loss probability to the packets outgoing from the chosen network interface
+duplicateRate: percentage value of network packets to be duplicated before queueing
+corruptionRate: emulation of random noise introducing an error in a random position for a chosen percent of packets
+
+Important: all Rates are given in percent (0-100)
+*/
+export type NetworkProfile = {
+  bandwidth?: {
+    value: number;
+    unit: BandwidthUnit;
+  };
+  delay?: {
+    value: number;
+    unit: TimeUnits;
+  };
+  lossRate?: number;
+  duplicateRate?: number;
+  corruptionRate?: number;
+};
+
 export interface Instance {
   /*
-  bandwidth: bandwidth or rate limit for the container
-  delay: length of time packets will be delayed
-  lossRate: percentage loss probability to the packets outgoing from the chosen network interface
-  duplicateRate: percentage value of network packets to be duplicated before queueing
-  corruptionRate: Corruption: emulation of random noise introducing an error in a random position for a chosen percent of packets
-
-  Important: all Rates are given in percent (0-100)
+  Directional traffic shaping. `ingress` shapes traffic into the pod
+  (download side), `egress` shapes traffic out of the pod (upload side).
+  Omitting both clears all limitations.
   */
   setNetworkControl(config: {
-    bandwidth?: {
-      value: number;
-      unit: BandwidthUnit;
-    };
-    delay?: {
-      value: number;
-      unit: TimeUnits;
-    };
-    lossRate?: number;
-    duplicateRate?: number;
-    corruptionRate?: number;
+    ingress?: NetworkProfile;
+    egress?: NetworkProfile;
   }): Promise<void>;
   //remove all traffic control settings
   clearAllNetworkLimitations(): Promise<void>;
